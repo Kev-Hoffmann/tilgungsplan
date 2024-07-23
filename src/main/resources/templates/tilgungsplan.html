@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tilgungsplan</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h1>Tilgunsplan</h1>
+
+    <div>
+        <p>Bitte geben Sie Ihren gewünschten Darlehensbetrag ein. Wir erstellen dann einen Tilgungsplan mit einem festen Sollzins von 3% und einer jährlichen Tilgung von 2% über die gesamte Laufzeit.</p>
+    </div>
+    <div>
+        <form action="" th:action="@{/tilgungsplan}" th:object="${darlehn}" method="post">
+            <div>
+                Darlehen:
+            </div>
+            <input type="number" name="darlehensBetrag"/>
+            <br/><br/>
+            <input type="submit" value="Erstellen"/>
+            <input type="reset" value="Zurücksetzen"/>
+        </form>
+    </div>
+
+    <br/>
+
+    <div th:if="${tilgungsplan != null}">
+        <h3>
+            Tilgungsplan für ein Darlehen in Höhe von [[${darlehensBetrag}]]€ :
+        </h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Jahr</th>
+                <th>Rate</th>
+                <th>Zinsanteil</th>
+                <th>Tilgungsanteil</th>
+                <th>Restschuld</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tilgungsplanEintrag : ${tilgungsplan.tilgungsplanEintragList}">
+                <td th:text="${tilgungsplanEintrag.jahr}"></td>
+                <td th:text="${tilgungsplanEintrag.rate}"></td>
+                <td th:text="${tilgungsplanEintrag.zinsanteil}"></td>
+                <td th:text="${tilgungsplanEintrag.tilungsanteil}"></td>
+                <td th:text="${tilgungsplanEintrag.restschulden}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
